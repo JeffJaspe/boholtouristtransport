@@ -55,6 +55,7 @@
           <!-- Primary image -->
           <div class="absolute top-0 left-0 w-[72%] h-[62%] rounded-3xl overflow-hidden shadow-xl-soft">
             <img
+              data-gsap="reveal-img"
               src="https://images.unsplash.com/photo-1571404114025-fcfda73cfca4?w=700&q=80"
               alt="Island hopping"
               class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
@@ -65,6 +66,7 @@
           <!-- Secondary top-right -->
           <div class="absolute top-[10%] right-0 w-[44%] h-[40%] rounded-3xl overflow-hidden shadow-xl-soft">
             <img
+              data-gsap="reveal-img"
               src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&q=80"
               alt="Snorkeling"
               class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
@@ -74,6 +76,7 @@
           <!-- Tertiary bottom-right -->
           <div class="absolute bottom-0 right-0 w-[55%] h-[42%] rounded-3xl overflow-hidden shadow-xl-soft">
             <img
+              data-gsap="reveal-img"
               src="https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=500&q=80"
               alt="Bohol landscape"
               class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
@@ -83,6 +86,7 @@
           <!-- Bottom-left accent -->
           <div class="absolute bottom-[8%] left-[4%] w-[36%] h-[30%] rounded-3xl overflow-hidden shadow-xl">
             <img
+              data-gsap="reveal-img"
               src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=300&q=80"
               alt="Beach"
               class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
@@ -90,7 +94,7 @@
           </div>
 
           <!-- Floating rating badge -->
-          <div class="absolute -bottom-6 left-[42%] -translate-x-1/2 bg-white rounded-2xl shadow-xl p-4 flex items-center gap-3 border border-slate-100/50 z-10">
+          <div data-gsap="reveal" class="absolute -bottom-6 left-[42%] -translate-x-1/2 bg-white rounded-2xl shadow-xl p-4 flex items-center gap-3 border border-slate-100/50 z-10">
             <div class="w-10 h-10 bg-gradient-to-br from-sand-400 to-sand-500 rounded-xl flex items-center justify-center text-lg shadow-glow-sand">
               🌴
             </div>
@@ -108,6 +112,7 @@
 
 <script setup lang="ts">
 useScrollReveal()
+useGsapScrollReveal()
 
 const features = [
   {

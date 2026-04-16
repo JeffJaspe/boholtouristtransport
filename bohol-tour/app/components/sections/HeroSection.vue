@@ -1,5 +1,5 @@
 <template>
-  <section class="relative min-h-screen flex items-center overflow-hidden">
+  <section ref="heroRef" class="relative min-h-screen flex items-center overflow-hidden">
     <!-- ── Layered background ─────────────────────────── -->
     <div class="absolute inset-0 z-0">
       <img
@@ -17,6 +17,32 @@
     <!-- ── Decorative glows ───────────────────────────── -->
     <div class="absolute top-1/3 right-0 w-[600px] h-[600px] bg-teal-500/8 rounded-full blur-[100px] z-0 animate-float" />
     <div class="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-ocean-500/10 rounded-full blur-[80px] z-0 animate-float-delayed" />
+
+    <!-- ── Drifting clouds (GSAP animated, loop) ────────── -->
+    <div class="absolute inset-0 z-[3] pointer-events-none overflow-hidden" aria-hidden="true">
+      <div data-cloud="1" class="absolute will-change-transform" style="top:7%;opacity:0.35">
+        <svg width="280" height="72" viewBox="0 0 280 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="140" cy="52" rx="130" ry="20" fill="white"/>
+          <ellipse cx="88" cy="40" rx="68" ry="28" fill="white"/>
+          <ellipse cx="192" cy="36" rx="56" ry="24" fill="white"/>
+          <ellipse cx="134" cy="28" rx="44" ry="22" fill="white"/>
+        </svg>
+      </div>
+      <div data-cloud="2" class="absolute will-change-transform" style="top:22%;opacity:0.22">
+        <svg width="210" height="58" viewBox="0 0 210 58" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="105" cy="42" rx="96" ry="16" fill="white"/>
+          <ellipse cx="66" cy="32" rx="50" ry="22" fill="white"/>
+          <ellipse cx="148" cy="28" rx="44" ry="18" fill="white"/>
+        </svg>
+      </div>
+      <div data-cloud="3" class="absolute will-change-transform" style="top:14%;opacity:0.18">
+        <svg width="175" height="50" viewBox="0 0 175 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="88" cy="36" rx="80" ry="14" fill="white"/>
+          <ellipse cx="56" cy="26" rx="44" ry="18" fill="white"/>
+          <ellipse cx="124" cy="22" rx="38" ry="16" fill="white"/>
+        </svg>
+      </div>
+    </div>
 
     <!-- ── Main content ───────────────────────────────── -->
     <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 lg:py-44">
@@ -124,6 +150,66 @@
       </svg>
     </div>
 
+    <!-- ── Tarsier mascot (GSAP: float, sway, blink) ───── -->
+    <div
+      ref="tarsierRef"
+      class="absolute bottom-52 right-4 lg:right-8 z-[19] w-14 h-20 pointer-events-none select-none hidden lg:block"
+      aria-hidden="true"
+    >
+      <svg viewBox="0 0 120 168" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full drop-shadow-xl">
+        <!-- Tail -->
+        <path d="M58 144 Q74 158 78 172 Q80 183 70 181" stroke="#7A5520" stroke-width="5" stroke-linecap="round" fill="none"/>
+        <!-- Body -->
+        <ellipse cx="60" cy="118" rx="20" ry="26" fill="#9B7430"/>
+        <!-- Arms -->
+        <path d="M40 110 Q21 122 17 134" stroke="#9B7430" stroke-width="7" stroke-linecap="round"/>
+        <path d="M80 110 Q99 122 103 134" stroke="#9B7430" stroke-width="7" stroke-linecap="round"/>
+        <!-- Fingers left -->
+        <circle cx="14" cy="135" r="3.5" fill="#B08840"/>
+        <circle cx="9" cy="141" r="3" fill="#B08840"/>
+        <circle cx="17" cy="143" r="3" fill="#B08840"/>
+        <!-- Fingers right -->
+        <circle cx="106" cy="135" r="3.5" fill="#B08840"/>
+        <circle cx="111" cy="141" r="3" fill="#B08840"/>
+        <circle cx="103" cy="143" r="3" fill="#B08840"/>
+        <!-- Head -->
+        <circle cx="60" cy="68" r="34" fill="#B08840"/>
+        <!-- Left ear -->
+        <ellipse cx="27" cy="48" rx="11" ry="15" fill="#9B7430" transform="rotate(-18 27 48)"/>
+        <ellipse cx="27" cy="48" rx="5.5" ry="8" fill="#D4A870" transform="rotate(-18 27 48)"/>
+        <!-- Right ear -->
+        <ellipse cx="93" cy="48" rx="11" ry="15" fill="#9B7430" transform="rotate(18 93 48)"/>
+        <ellipse cx="93" cy="48" rx="5.5" ry="8" fill="#D4A870" transform="rotate(18 93 48)"/>
+        <!-- Eye sockets -->
+        <circle cx="42" cy="68" r="22" fill="#2A1A0A"/>
+        <circle cx="78" cy="68" r="22" fill="#2A1A0A"/>
+        <!-- Eye whites -->
+        <circle cx="42" cy="68" r="17" fill="#F5F0E8"/>
+        <circle cx="78" cy="68" r="17" fill="#F5F0E8"/>
+        <!-- Irises -->
+        <circle cx="42" cy="68" r="12" fill="#3D2B1A"/>
+        <circle cx="78" cy="68" r="12" fill="#3D2B1A"/>
+        <!-- Pupils -->
+        <circle cx="42" cy="68" r="7" fill="#080604"/>
+        <circle cx="78" cy="68" r="7" fill="#080604"/>
+        <!-- Eye shines -->
+        <circle cx="38" cy="63" r="3.5" fill="white" opacity="0.9"/>
+        <circle cx="46" cy="74" r="2" fill="white" opacity="0.4"/>
+        <circle cx="74" cy="63" r="3.5" fill="white" opacity="0.9"/>
+        <circle cx="82" cy="74" r="2" fill="white" opacity="0.4"/>
+        <!-- Nose -->
+        <ellipse cx="60" cy="82" rx="5.5" ry="3.5" fill="#7A4F2A"/>
+        <!-- Mouth -->
+        <path d="M54 89 Q60 94 66 89" stroke="#7A4F2A" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+        <!-- Cheek blush -->
+        <ellipse cx="32" cy="76" rx="8" ry="5" fill="#D4956A" opacity="0.2"/>
+        <ellipse cx="88" cy="76" rx="8" ry="5" fill="#D4956A" opacity="0.2"/>
+        <!-- Blink overlays: GSAP animates attr.ry 0 → 17 → 0 for blink -->
+        <ellipse class="tarsier-blink" cx="42" cy="68" rx="17" ry="0" fill="#B08840"/>
+        <ellipse class="tarsier-blink" cx="78" cy="68" rx="17" ry="0" fill="#B08840"/>
+      </svg>
+    </div>
+
     <!-- ── Scroll indicator ───────────────────────────── -->
     <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 animate-bounce">
       <div class="w-5 h-8 border-2 border-white/30 rounded-full flex items-start justify-center p-1">
@@ -134,15 +220,13 @@
 </template>
 
 <script setup lang="ts">
-const parallax = ref(0)
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-onMounted(() => {
-  const onScroll = () => {
-    parallax.value = window.scrollY * 0.15
-  }
-  window.addEventListener('scroll', onScroll, { passive: true })
-  onUnmounted(() => window.removeEventListener('scroll', onScroll))
-})
+const parallax = ref(0)
+const heroRef = ref<HTMLElement | null>(null)
+const tarsierRef = ref<HTMLElement | null>(null)
+let gsapCtx: gsap.Context | null = null
 
 const stats = [
   { value: '50+', label: 'Tours' },
@@ -150,4 +234,82 @@ const stats = [
   { value: '4.9★', label: 'Rating' },
   { value: '10yr', label: 'Experience' },
 ]
+
+onMounted(() => {
+  gsap.registerPlugin(ScrollTrigger)
+
+  gsapCtx = gsap.context(() => {
+    const vw = window.innerWidth
+    const isMobile = vw < 1024
+    const speed = isMobile ? 0.65 : 1
+
+    // ── Drifting clouds (continuous horizontal loop) ──────────────────────
+    gsap.fromTo('[data-cloud="1"]',
+      { x: -380 },
+      { x: vw + 380, duration: 30 / speed, ease: 'none', repeat: -1 },
+    )
+    gsap.fromTo('[data-cloud="2"]',
+      { x: vw + 300 },
+      { x: -300, duration: 38 / speed, ease: 'none', repeat: -1, delay: 7 },
+    )
+    gsap.fromTo('[data-cloud="3"]',
+      { x: -480 },
+      { x: vw + 480, duration: 47 / speed, ease: 'none', repeat: -1, delay: 17 },
+    )
+
+    // ── Tarsier idle (desktop only, keeps things calm on mobile) ──────────
+    if (tarsierRef.value && !isMobile) {
+      // Gentle float
+      gsap.to(tarsierRef.value, {
+        y: -10,
+        duration: 2.8,
+        ease: 'sine.inOut',
+        yoyo: true,
+        repeat: -1,
+      })
+      // Subtle sway
+      gsap.to(tarsierRef.value, {
+        rotation: 2.5,
+        transformOrigin: 'bottom center',
+        duration: 4,
+        ease: 'sine.inOut',
+        yoyo: true,
+        repeat: -1,
+        delay: 1,
+      })
+      // Natural double-blink (SVG attr animation — no transform conflict)
+      const blinkTl = gsap.timeline({ repeat: -1, repeatDelay: 3.5 })
+      blinkTl
+        .to('.tarsier-blink', { attr: { ry: 17 }, duration: 0.07, ease: 'power2.in' })
+        .to('.tarsier-blink', { attr: { ry: 0 }, duration: 0.10, ease: 'power2.out', delay: 0.04 })
+        .to('.tarsier-blink', { attr: { ry: 17 }, duration: 0.06, ease: 'power2.in', delay: 0.12 })
+        .to('.tarsier-blink', { attr: { ry: 0 }, duration: 0.10, ease: 'power2.out' })
+    }
+
+    // ── Hero text scroll parallax (cinematic depth as hero exits viewport) ─
+    const textWrap = heroRef.value?.querySelector<HTMLElement>('.max-w-3xl')
+    if (textWrap) {
+      gsap.to(textWrap, {
+        scrollTrigger: {
+          trigger: heroRef.value,
+          start: 'top top',
+          end: '75% top',
+          scrub: 1.2,
+        },
+        y: isMobile ? -40 : -75,
+        ease: 'none',
+      })
+    }
+  })
+
+  // Keep existing scroll-driven parallax on bg image (unchanged)
+  const onScroll = () => { parallax.value = window.scrollY * 0.15 }
+  window.addEventListener('scroll', onScroll, { passive: true })
+  onUnmounted(() => window.removeEventListener('scroll', onScroll))
+})
+
+onUnmounted(() => {
+  gsapCtx?.revert()
+  gsapCtx = null
+})
 </script>
