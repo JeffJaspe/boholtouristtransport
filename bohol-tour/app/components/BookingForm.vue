@@ -152,7 +152,7 @@ const minDate = computed(() => {
 const validate = () => {
   Object.keys(errors).forEach((k) => delete (errors as Record<string, string>)[k])
   if (!form.name.trim()) errors.name = 'Name is required'
-  if (!form.email.trim() || !/\S+@\S+\.\S+/.test(form.email)) errors.email = 'Valid email required'
+  if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(form.email)) errors.email = 'Valid email required'
   if (!form.phone.trim()) errors.phone = 'Phone is required'
   if (!form.date) errors.date = 'Date is required'
   if (!form.guests || Number(form.guests) < 1) errors.guests = 'Select at least 1 guest'

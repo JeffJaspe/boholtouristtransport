@@ -25,6 +25,13 @@ export interface Booking {
 
 export type BookingStatus = 'pending' | 'confirmed' | 'cancelled'
 
+export interface BookingStats {
+  total: number
+  pending: number
+  confirmed: number
+  cancelled: number
+}
+
 export interface BookingFormData {
   name: string
   email: string

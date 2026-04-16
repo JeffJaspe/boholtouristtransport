@@ -1,4 +1,4 @@
-import type { Booking, BookingFormData, BookingStatus } from '~/types'
+import type { Booking, BookingFormData, BookingStats, BookingStatus } from '~/types'
 
 export const useBookings = () => {
   const supabase = useSupabaseClient()
@@ -57,16 +57,16 @@ export const useBookings = () => {
     if (error) throw error
   }
 
-  const getBookingStats = async () => {
+  const getBookingStats = async (): Promise<BookingStats> => {
     if (!supabase) return { total: 0, pending: 0, confirmed: 0, cancelled: 0 }
 
     const { data, error } = await supabase.from('bookings').select('status')
     if (error) throw error
 
     const total = data.length
-    const pending = data.filter((b) => b.status === 'pending').length
-    const confirmed = data.filter((b) => b.status === 'confirmed').length
-    const cancelled = data.filter((b) => b.status === 'cancelled').length
+    const pending = data.filter((b: { status: string }) => b.status === 'pending').length
+    const confirmed = data.filter((b: { status: string }) => b.status === 'confirmed').length
+    const cancelled = data.filter((b: { status: string }) => b.status === 'cancelled').length
     return { total, pending, confirmed, cancelled }
   }
 
