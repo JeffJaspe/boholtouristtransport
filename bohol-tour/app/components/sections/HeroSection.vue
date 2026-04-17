@@ -162,7 +162,7 @@ const heroCanvas = ref<HTMLCanvasElement | null>(null)
 /** Total frames in /public/chocolate-hills/frame_001.jpg … frame_060.jpg */
 const TOTAL_FRAMES = 60
 const frameSrc = (n: number) =>
-  `/chocolatehillsFrames/frame_${String(n).padStart(3, '0')}.jpg`
+  `/ChocolateHillsFrames/frame_${String(n).padStart(3, '0')}.jpg`
 
 // Mutable state — not reactive intentionally (GSAP mutates these directly)
 const frames: HTMLImageElement[] = []
@@ -269,6 +269,7 @@ onMounted(async () => {
   onUnmounted(() => window.removeEventListener('scroll', onScroll))
 
   // Abort sequence on low-end devices or when canvas ref is absent
+  console.log('[Seq] isLowEnd:', isLowEnd(), '| canvas:', !!heroCanvas.value)
   if (isLowEnd() || !heroCanvas.value) {
     setupFallbackParallax()
     return
@@ -276,9 +277,11 @@ onMounted(async () => {
 
   // Size the canvas before loading so first draw is correct
   resizeCanvas()
+  console.log('[Seq] canvas size:', heroCanvas.value?.offsetWidth, heroCanvas.value?.offsetHeight)
 
   // Preload — resolve(false) if more than half the frames failed
   const loaded = await preloadFrames()
+  console.log('[Seq] frames loaded:', loaded, '| first frame src:', frames[0]?.src, '| naturalWidth:', frames[0]?.naturalWidth)
 
   if (!loaded) {
     setupFallbackParallax()
@@ -288,6 +291,7 @@ onMounted(async () => {
   // ── Sequence is ready ─────────────────────────────────────────────────────
   sequenceReady = true
   drawFrame(0)
+  console.log('[Seq] first frame drawn, fading canvas in')
 
   // Fade canvas in — the static beach img beneath acts as the load-state fallback
   if (heroCanvas.value) heroCanvas.value.style.opacity = '1'
