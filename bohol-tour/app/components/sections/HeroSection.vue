@@ -3,6 +3,7 @@
     <!-- ── Layered background ─────────────────────────── -->
     <div class="absolute inset-0 z-0">
       <img
+        ref="heroBgImg"
         src="https://images.unsplash.com/photo-1559494007-9f5847c49d94?w=1920&q=90"
         alt="Bohol paradise beach"
         class="w-full h-full object-cover scale-105 transition-transform duration-[10000ms]"
@@ -158,6 +159,7 @@ const stats = [
 
 // ── Chocolate Hills image sequence ────────────────────────────────────────────
 const heroCanvas = ref<HTMLCanvasElement | null>(null)
+const heroBgImg = ref<HTMLImageElement | null>(null)
 
 /** Total frames in /public/chocolate-hills/frame_001.jpg … frame_060.jpg */
 const TOTAL_FRAMES = 60
@@ -240,6 +242,10 @@ function isLowEnd(): boolean {
 // ── Fallback: original text parallax (no sequence) ───────────────────────────
 
 function setupFallbackParallax() {
+  // Restore beach image as background when sequence is unavailable
+  if (heroBgImg.value) heroBgImg.value.style.opacity = '1'
+  if (heroCanvas.value) heroCanvas.value.style.opacity = '0'
+
   const isMobile = window.innerWidth < 1024
   const textWrap = heroRef.value?.querySelector<HTMLElement>('.max-w-3xl')
   if (!textWrap) return
@@ -276,17 +282,30 @@ onMounted(async () => {
 
   resizeCanvas()
 
+  // ── Show frame 1 immediately so beach image never flashes ─────────────────
+  await new Promise<void>((resolve) => {
+    const first = new Image()
+    first.onload = () => {
+      frames[0] = first
+      drawFrame(0)
+      if (heroCanvas.value) heroCanvas.value.style.opacity = '1'
+      if (heroBgImg.value) heroBgImg.value.style.opacity = '0'
+      resolve()
+    }
+    first.onerror = () => resolve() // proceed even if first frame fails
+    first.src = frameSrc(1)
+  })
+
+  // ── Load remaining 59 frames in background ────────────────────────────────
   const loaded = await preloadFrames()
   if (!loaded) {
     setupFallbackParallax()
     return
   }
 
-  // ── Sequence is ready ─────────────────────────────────────────────────────
+  // ── All frames ready — enable scroll animation ────────────────────────────
   sequenceReady = true
   drawFrame(0)
-
-  if (heroCanvas.value) heroCanvas.value.style.opacity = '1'
 
   const isMobile = window.innerWidth < 1024
   const textWrap = heroRef.value?.querySelector<HTMLElement>('.max-w-3xl')
