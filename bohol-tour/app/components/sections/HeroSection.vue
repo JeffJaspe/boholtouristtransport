@@ -234,9 +234,7 @@ function preloadFrames(): Promise<boolean> {
 // ── Device capability check ───────────────────────────────────────────────────
 
 function isLowEnd(): boolean {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return true
-  if (typeof navigator.hardwareConcurrency === 'number' && navigator.hardwareConcurrency <= 2) return true
-  return false
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches
 }
 
 // ── Fallback: original text parallax (no sequence) ───────────────────────────
@@ -303,9 +301,6 @@ onMounted(async () => {
     gsap.to(frameObj, {
       frame: TOTAL_FRAMES - 1,
 
-      // snap: 'frame' tells GSAP to snap the "frame" property to whole numbers
-      // so canvas never renders a non-integer frame index
-      snap: 'frame',
       ease: 'none',
 
       onUpdate() {
