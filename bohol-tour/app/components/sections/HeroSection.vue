@@ -269,20 +269,14 @@ onMounted(async () => {
   onUnmounted(() => window.removeEventListener('scroll', onScroll))
 
   // Abort sequence on low-end devices or when canvas ref is absent
-  console.log('[Seq] isLowEnd:', isLowEnd(), '| canvas:', !!heroCanvas.value)
   if (isLowEnd() || !heroCanvas.value) {
     setupFallbackParallax()
     return
   }
 
-  // Size the canvas before loading so first draw is correct
   resizeCanvas()
-  console.log('[Seq] canvas size:', heroCanvas.value?.offsetWidth, heroCanvas.value?.offsetHeight)
 
-  // Preload — resolve(false) if more than half the frames failed
   const loaded = await preloadFrames()
-  console.log('[Seq] frames loaded:', loaded, '| first frame src:', frames[0]?.src, '| naturalWidth:', frames[0]?.naturalWidth)
-
   if (!loaded) {
     setupFallbackParallax()
     return
@@ -291,14 +285,14 @@ onMounted(async () => {
   // ── Sequence is ready ─────────────────────────────────────────────────────
   sequenceReady = true
   drawFrame(0)
-  console.log('[Seq] first frame drawn, fading canvas in')
 
-  // Fade canvas in — the static beach img beneath acts as the load-state fallback
   if (heroCanvas.value) heroCanvas.value.style.opacity = '1'
 
   const isMobile = window.innerWidth < 1024
   const textWrap = heroRef.value?.querySelector<HTMLElement>('.max-w-3xl')
-  const scrollDist = window.innerHeight * 2.5   // pin duration: 2.5× viewport
+
+  // 5× viewport height — user scrolls through full cinematic sequence
+  const scrollDist = window.innerHeight * 5
   const frameObj = { frame: 0 }
 
   gsapCtx = gsap.context(() => {
