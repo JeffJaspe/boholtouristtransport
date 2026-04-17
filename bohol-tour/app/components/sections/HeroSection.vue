@@ -162,7 +162,7 @@ const heroCanvas = ref<HTMLCanvasElement | null>(null)
 /** Total frames in /public/chocolate-hills/frame_001.jpg … frame_060.jpg */
 const TOTAL_FRAMES = 60
 const frameSrc = (n: number) =>
-  `/chocolate-hills/frame_${String(n).padStart(3, '0')}.jpg`
+  `/chocolatehillsFrames/frame_${String(n).padStart(3, '0')}.jpg`
 
 // Mutable state — not reactive intentionally (GSAP mutates these directly)
 const frames: HTMLImageElement[] = []
